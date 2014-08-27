@@ -12,23 +12,30 @@
 
     <!-- endbower -->
     <!-- endbuild -->
+    <link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
   <body>
-    <!--[if lt IE 10]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <div class="hero-unit">
-      <h1>'Allo, 'Allo!</h1>
-      <p>You now have</p>
-      <ul>
-        <li>HTML5 Boilerplate</li>
-        <li>Sass</li>
-
-      </ul>
+    <div class="container">
+      <header>
+        <div class="content-wrapper">
+          <svg height="40" width="350" class="outer-separator top">
+            <polyline points="0,30 125,30 135,20 155,40 185,10 175,0 165,10 195,40 215,20 225,30 350,30" style="fill:none;stroke:white;stroke-width:1" />
+          </svg>
+          <span class="pretitle h1">My name is</span>
+          <h1 class="highlight">Alejandro Pérez Roca</h1>
+          <span class="separator"></span>
+          <span class="pretitle h2">I'm a</span>
+          <h2 class="highlight">full stack web developer</h2>
+          <svg height="40" width="350" class="outer-separator bottom">
+            <polyline points="0,30 125,30 135,20 155,40 185,10 175,0 165,10 195,40 215,20 225,30 350,30" style="fill:none;stroke:white;stroke-width:1" />
+          </svg>
+        </div>
+        <a href="mailto:hello@alejandroperezroca.com" class="contact">hello@alejandroperezroca.com</a>
+      </header>
+      <div class="timeline-wrapper" ng-view=""></div>
     </div>
 
     <!-- build:js scripts/vendor.js -->

@@ -152,7 +152,8 @@ module.exports = function (grunt) {
         sass: {
             options: {
                 loadPath: [
-                    'bower_components'
+                    'bower_components',
+                    'bower_components/bourbon/dist'
                 ]
             },
             dist: {
