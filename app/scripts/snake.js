@@ -21,15 +21,15 @@ App.Models.Snake = function() {
     }
 
     $('header').append(buildSnake());
-
-    startMoving();
   };
 
   // Public methods
 
   // Set the direction of the movement
   this.setDirection = function(direction) {
-    _direction = direction;
+    if (possibleChangeTo(direction)) {
+      _direction = direction;
+    }
   };
 
   // Returns the number of pieces of the snake
@@ -38,8 +38,8 @@ App.Models.Snake = function() {
   };
 
   // Starts moving the snake
-  var startMoving = function() {
-    //setInterval(move, 1000);
+  this.startMoving = function() {
+    setInterval(move, 200);
   };
 
   // Returns the DOM representation of the snake
@@ -54,7 +54,7 @@ App.Models.Snake = function() {
   };
 
   // Moves the snake based on the direction
-  this.move = function() {
+  var move = function() {
     var newX, newY, firstPiece = _snake[0];
 
     switch (_direction) {
@@ -94,6 +94,13 @@ App.Models.Snake = function() {
     }
 
     _snake.push(piece);
+  };
+
+  // Returns true if it's possible to change to the given direction
+  var possibleChangeTo = function(direction) {
+    // Magic, bitches!
+    // https://www.nerdist.com/wp-content/uploads/2014/05/shia-labeouf-magic-gif.gif
+    return (_direction + direction) % 2 != 0
   };
 
   // Calls the initializer on creation
