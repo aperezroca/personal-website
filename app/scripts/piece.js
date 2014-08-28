@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-var Piece = function() {
+/* global App */
+App.Models.Piece = function() {
   // Constants
   var PIECE_SIZE = 10;
 
   // Private vars
-  var _self = this,
-      _position = { x: 0, y: 0 }, _snake = [],
+  var _position = { x: 0, y: 0 },
       _$piece;
 
   // Constructor

@@ -1,14 +1,14 @@
 'use strict';
 
-var Snake = function() {
+/* global App */
+App.Models.Snake = function() {
   // Constants
   var MOVEMENT_UP = 0, MOVEMENT_RIGHT = 1,
       MOVEMENT_DOWN = 2, MOVEMENT_LEFT = 3,
       PIECE_SIZE = 10, STEP_SIZE = PIECE_SIZE;
 
   // Private vars
-  var _self = this,
-      _movement = MOVEMENT_UP,
+  var _movement = MOVEMENT_UP,
       _snake = [];
 
   // Constructor
@@ -82,13 +82,12 @@ var Snake = function() {
   // Creates and append a new piece to the snake
   var appendPiece = function() {
     var piece, lastElement = _snake[_snake.length-1];
-
     if (lastElement) {
-      piece = new Piece(
+      piece = new App.Models.Piece(
         lastElement.getX(),
         lastElement.getY() + STEP_SIZE);
     } else {
-      piece = new Piece(100, 100);
+      piece = new App.Models.Piece(100, 100);
     }
 
     _snake.push(piece);

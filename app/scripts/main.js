@@ -1,1 +1,1 @@
-var snake = new Snake();
+App.initialize();
