@@ -48,4 +48,6 @@ App.Models.Piece = function() {
 
   // Calls the initializer on creation
   this.initialize.apply(this, arguments);
+
+  return this;
 };

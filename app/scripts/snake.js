@@ -98,4 +98,6 @@ App.Models.Snake = function() {
 
   // Calls the initializer on creation
   this.initialize.apply(this);
+
+  return this;
 };
