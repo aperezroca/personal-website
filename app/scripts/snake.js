@@ -3,12 +3,15 @@
 /* global App */
 App.Models.Snake = function() {
   // Constants
-  var MOVEMENT_UP = 0, MOVEMENT_RIGHT = 1,
-      MOVEMENT_DOWN = 2, MOVEMENT_LEFT = 3,
-      PIECE_SIZE = 10, STEP_SIZE = PIECE_SIZE;
+  this.DIRECTION_UP = 0;
+  this.DIRECTION_RIGHT = 1;
+  this.DIRECTION_DOWN = 2;
+  this.DIRECTION_LEFT = 3;
+  this.PIECE_SIZE = 10;
+  this.STEP_SIZE = this.PIECE_SIZE;
 
   // Private vars
-  var _movement = MOVEMENT_UP,
+  var _self = this, _direction = _self.DIRECTION_UP,
       _snake = [];
 
   // Constructor
@@ -25,8 +28,8 @@ App.Models.Snake = function() {
   // Public methods
 
   // Set the direction of the movement
-  this.setMove = function(movement) {
-    _movement = movement;
+  this.setDirection = function(direction) {
+    _direction = direction;
   };
 
   // Returns the number of pieces of the snake
@@ -54,22 +57,22 @@ App.Models.Snake = function() {
   this.move = function() {
     var newX, newY, firstPiece = _snake[0];
 
-    switch (_movement) {
-      case MOVEMENT_UP:
+    switch (_direction) {
+      case _self.DIRECTION_UP:
         newX = firstPiece.getX();
-        newY = firstPiece.getY() - STEP_SIZE;
+        newY = firstPiece.getY() - _self.STEP_SIZE;
         break;
-      case MOVEMENT_LEFT:
-        newX = firstPiece.getX() - STEP_SIZE;
+      case _self.DIRECTION_LEFT:
+        newX = firstPiece.getX() - _self.STEP_SIZE;
         newY = firstPiece.getY();
         break;
-      case MOVEMENT_RIGHT:
-        newX = firstPiece.getX() + STEP_SIZE;
+      case _self.DIRECTION_RIGHT:
+        newX = firstPiece.getX() + _self.STEP_SIZE;
         newY = firstPiece.getY();
         break;
-      case MOVEMENT_DOWN:
+      case _self.DIRECTION_DOWN:
         newX = firstPiece.getX();
-        newY = firstPiece.getY() + STEP_SIZE;
+        newY = firstPiece.getY() + _self.STEP_SIZE;
         break;
     }
 
@@ -85,7 +88,7 @@ App.Models.Snake = function() {
     if (lastElement) {
       piece = new App.Models.Piece(
         lastElement.getX(),
-        lastElement.getY() + STEP_SIZE);
+        lastElement.getY() + _self.STEP_SIZE);
     } else {
       piece = new App.Models.Piece(100, 100);
     }

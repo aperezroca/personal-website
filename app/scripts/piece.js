@@ -3,7 +3,7 @@
 /* global App */
 App.Models.Piece = function() {
   // Constants
-  var PIECE_SIZE = 10;
+  this.PIECE_SIZE = 10;
 
   // Private vars
   var _position = { x: 0, y: 0 },
@@ -13,8 +13,8 @@ App.Models.Piece = function() {
   this.initialize = function(x, y) {
     // Create DOM object
     _$piece = $('<li>').addClass('piece').css({
-      height: PIECE_SIZE + 'px',
-      width: PIECE_SIZE + 'px'
+      height: this.PIECE_SIZE + 'px',
+      width: this.PIECE_SIZE + 'px'
     });
 
     // Position the piece in the game board
