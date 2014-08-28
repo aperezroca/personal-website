@@ -100,7 +100,7 @@ App.Models.Snake = function() {
   var possibleChangeTo = function(direction) {
     // Magic, bitches!
     // https://www.nerdist.com/wp-content/uploads/2014/05/shia-labeouf-magic-gif.gif
-    return (_direction + direction) % 2 != 0
+    return (_direction + direction) % 2 !== 0;
   };
 
   // Calls the initializer on creation
