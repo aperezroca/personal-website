@@ -1,43 +1,5 @@
 'use strict';
 
-var Piece = function() {
-  // Constants
-  var PIECE_SIZE = 10;
-
-  // Private vars
-  var _self = this,
-      _position = { x: 0, y: 0 }, _snake = [],
-      _$piece;
-
-  this.initialize = function(x, y) {
-    _$piece = $('<li>').addClass('piece').css({
-      height: PIECE_SIZE + 'px',
-      width: PIECE_SIZE + 'px'
-    });
-
-    _position.x = x;
-    _position.y = y;
-    onPositionUpdate();
-  };
-
-  this.getX = function() { return _position.x; };
-  this.getY = function() { return _position.y; };
-
-  this.setPosition = function(x, y) {
-    _position.x = x;
-    _position.y = y;
-    onPositionUpdate();
-  };
-
-  this.buildPiece = function() { return _$piece; };
-
-  var onPositionUpdate = function() {
-    _$piece.css({ left: _position.x, top: _position.y });
-  };
-
-  this.initialize.apply(this, arguments);
-};
-
 var Snake = function() {
   // Constants
   var MOVEMENT_UP = 0, MOVEMENT_RIGHT = 1,
@@ -60,18 +22,24 @@ var Snake = function() {
     startMoving();
   };
 
+  // Public methods
+
+  // Set the direction of the movement
   this.setMove = function(movement) {
     _movement = movement;
   };
 
+  // Returns the number of pieces of the snake
   this.numberOfPieces = function() {
     return _snake.length;
   };
 
+  // Starts moving the snake
   var startMoving = function() {
     //setInterval(move, 1000);
   };
 
+  // Returns the DOM representation of the snake
   var buildSnake = function() {
     var $snake = $('<ul>').addClass('snake');
 
@@ -82,6 +50,7 @@ var Snake = function() {
     return $snake;
   };
 
+  // Moves the snake based on the direction
   this.move = function() {
     var newX, newY, firstPiece = _snake[0];
 
@@ -108,6 +77,9 @@ var Snake = function() {
     _snake.unshift(_snake.pop());
   };
 
+  // Private methods
+
+  // Creates and append a new piece to the snake
   var appendPiece = function() {
     var piece, lastElement = _snake[_snake.length-1];
 
@@ -122,5 +94,6 @@ var Snake = function() {
     _snake.push(piece);
   };
 
+  // Calls the initializer on creation
   this.initialize.apply(this);
 };
