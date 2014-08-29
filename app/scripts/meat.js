@@ -34,8 +34,6 @@ App.Models.Meat = function() {
   var setPosition = function() {
     _position.x = generateRandomPosition(_limits.x0, _limits.x1);
     _position.y = generateRandomPosition(_limits.y0, _limits.y1);
-    console.log(_limits);
-    console.log(_position);
   };
 
   // Generates a random int divisible by STEP_SIZE
