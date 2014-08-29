@@ -5,5 +5,5 @@ var App = {
 };
 
 App.initialize = function() {
-  App.Models.Game();
+  App.Models.Game($('header'));
 };

@@ -12,15 +12,15 @@ App.Models.Snake = function() {
 
   // Private vars
   var _self = this, _direction = _self.DIRECTION_UP,
-      _snake = [];
+      _snake = [], _limits;
 
   // Constructor
-  this.initialize = function() {
+  this.initialize = function(limits) {
+    _limits = limits;
+
     for (var i = 0; i < 10; i++) {
       appendPiece();
     }
-
-    $('header').append(buildSnake());
   };
 
   // Public methods
@@ -39,11 +39,11 @@ App.Models.Snake = function() {
 
   // Starts moving the snake
   this.startMoving = function() {
-    setInterval(move, 200);
+    setInterval(move, 20);
   };
 
   // Returns the DOM representation of the snake
-  var buildSnake = function() {
+  this.buildSnake = function() {
     var $snake = $('<ul>').addClass('snake');
 
     $.each(_snake, function(index, element) {
@@ -53,10 +53,18 @@ App.Models.Snake = function() {
     return $snake;
   };
 
+  // Set limits for the snake to move
+  this.setLimits = function(limits) {
+    _limits = limits;
+  };
+
+  // Private methods
+
   // Moves the snake based on the direction
   var move = function() {
     var newX, newY, firstPiece = _snake[0];
 
+    // Calculates the new position of the snake based on the direction
     switch (_direction) {
       case _self.DIRECTION_UP:
         newX = firstPiece.getX();
@@ -76,21 +84,24 @@ App.Models.Snake = function() {
         break;
     }
 
-    _snake[_snake.length-1].setPosition(newX, newY);
-    _snake.unshift(_snake.pop());
+    // Check if the new position would exceed the limits
+    if (newX >= _limits.x0 && (newX + _self.STEP_SIZE <= _limits.x1) &&
+        newY >= _limits.y0 && (newY + _self.STEP_SIZE <= _limits.y1)) {
+      _snake[_snake.length-1].setPosition(newX, newY);
+      _snake.unshift(_snake.pop());
+    }
   };
-
-  // Private methods
 
   // Creates and append a new piece to the snake
   var appendPiece = function() {
     var piece, lastElement = _snake[_snake.length-1];
+
     if (lastElement) {
       piece = new App.Models.Piece(
         lastElement.getX(),
         lastElement.getY() + _self.STEP_SIZE);
     } else {
-      piece = new App.Models.Piece(100, 100);
+      piece = new App.Models.Piece(_limits.x0, _limits.y0);
     }
 
     _snake.push(piece);
@@ -104,7 +115,7 @@ App.Models.Snake = function() {
   };
 
   // Calls the initializer on creation
-  this.initialize.apply(this);
+  this.initialize.apply(this, arguments);
 
   return this;
 };

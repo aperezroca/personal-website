@@ -5,10 +5,10 @@
 
 html, body { height: 100%; }
 
-.container { height: 100%; }
+.container { height: 100%; padding: 10px; }
 
 body {
-  background-color: $background-color-primary;
+  background-color: $background-color-secondary;
   font-family: "Arvo", serif;
 }
 
@@ -16,7 +16,6 @@ header {
   position: relative;
   display: flex;
   height: 100%;
-  background-color: $background-color-secondary;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -26,8 +25,7 @@ header {
   // animation-iteration-count: infinite;
   // animation-timing-function: linear;
 
-  outline: 1px solid white;
-  outline-offset: -10px;
+  border: 1px solid white;
   color: white;
   font-weight: 400;
 
@@ -84,7 +82,7 @@ header {
   .contact {
     display: block;
     position: absolute;
-    bottom: 4px;
+    bottom: -6px;
     left: 50%;
     font-size: 13px;
     text-align: center;
