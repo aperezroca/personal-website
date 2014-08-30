@@ -5,7 +5,7 @@ App.Models.Game = function() {
   // Constants
 
   // Private vars
-  var _snake, _limits, _$container;
+  var _snake, _limits, _meat, _$container;
 
   // Constructor
   this.initialize = function(container) {
@@ -16,6 +16,7 @@ App.Models.Game = function() {
 
     _snake = App.Models.Snake(_limits);
     _snake.startMoving();
+    _snake.setOnMoveListener(onSnakeMoveCallback);
 
     _$container.append(_snake.buildSnake());
   };
@@ -51,7 +52,8 @@ App.Models.Game = function() {
 
   // Add meat in the board in a random location
   var addMeat = function() {
-    _$container.append((new App.Models.Meat(_limits)).buildMeat());
+    _meat = new App.Models.Meat(_limits);
+    _$container.append(_meat.buildMeat());
   };
 
   // Calculate the limits of the board
@@ -65,6 +67,20 @@ App.Models.Game = function() {
       y0 : Math.floor((height % 10) / 2),
       y1 : height - Math.ceil((height % 2) / 2)
     };
+    console.log(_limits);
+  };
+
+  var onSnakeMoveCallback = function(headPosition) {
+    if (_meat.getPosition().x === headPosition.x &&
+        _meat.getPosition().y === headPosition.y) {
+      onSnakeEatsMeat();
+    }
+  };
+
+  var onSnakeEatsMeat = function() {
+    _snake.grow();
+    _meat.destroy();
+    addMeat();
   };
 
   // Calls the initializer on creation

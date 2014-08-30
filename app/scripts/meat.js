@@ -7,26 +7,35 @@ App.Models.Meat = function() {
 
   // Private vars
   var _self = this,
-      _limits = {}, _position = { x: 0, y: 0 };
+      _limits = {}, _position = { x: 0, y: 0 },
+      _$meat;
 
   // Constructor
   this.initialize = function(limits) {
     _limits = limits;
 
     setPosition();
-  };
 
-  // Public methods
-
-  // Returns the DOM representaiton of the meat
-  this.buildMeat = function() {
-    return $('<div>').addClass('meat').css({
+    _$meat = $('<div>').addClass('meat').css({
       height: _self.MEAT_SIZE + 'px',
       width: _self.MEAT_SIZE + 'px',
       top: _position.y,
       left: _position.x
     });
   };
+
+  // Public methods
+
+  // Returns the DOM representaiton of the meat
+  this.buildMeat = function() {
+    return _$meat;
+  };
+
+  // Position getter
+  this.getPosition = function() { return _position; };
+
+  // Destroy meat
+  this.destroy = function() { _$meat.remove(); };
 
   // Private methods
 

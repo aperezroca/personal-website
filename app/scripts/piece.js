@@ -39,6 +39,11 @@ App.Models.Piece = function() {
   // Returns the DOM representation of the piece
   this.buildPiece = function() { return _$piece; };
 
+  // Clones this object
+  this.clone = function() {
+    return new App.Models.Piece(_position.x, _position.y);
+  };
+
   // Private methods
 
   // Callback to execute when the position of the piece changes

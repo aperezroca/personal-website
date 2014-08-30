@@ -12,11 +12,14 @@ App.Models.Snake = function() {
 
   // Private vars
   var _self = this, _direction = _self.DIRECTION_UP,
-      _snake = [], _limits;
+      _snake = [], _limits, _grow = false, _moveInterval,
+      _onMoveListener,
+      _$snake;
 
   // Constructor
   this.initialize = function(limits) {
     _limits = limits;
+    _$snake = $('<ul>').addClass('snake');
 
     for (var i = 0; i < 10; i++) {
       appendPiece();
@@ -39,24 +42,34 @@ App.Models.Snake = function() {
 
   // Starts moving the snake
   this.startMoving = function() {
-    setInterval(move, 20);
+    _moveInterval = setInterval(move, 20);
+  };
+
+  // Stops moving the snake
+  this.stopMoving = function() {
+    if (_moveInterval) { clearInterval(_moveInterval); }
   };
 
   // Returns the DOM representation of the snake
   this.buildSnake = function() {
-    var $snake = $('<ul>').addClass('snake');
-
-    $.each(_snake, function(index, element) {
-      $snake.append(element.buildPiece());
-    });
-
-    return $snake;
+    return _$snake;
   };
 
   // Set limits for the snake to move
   this.setLimits = function(limits) {
     _limits = limits;
   };
+
+  // Attach listener to snake movement
+  this.setOnMoveListener = function(callback) {
+    _onMoveListener = callback;
+  };
+
+  // Makes the snake grow one piece
+  this.grow = function() { _grow = true; };
+
+  // Returns the tail of the snake
+  this.tail = function() { return _snake[_snake.length-1]; };
 
   // Private methods
 
@@ -68,27 +81,52 @@ App.Models.Snake = function() {
     switch (_direction) {
       case _self.DIRECTION_UP:
         newX = firstPiece.getX();
-        newY = firstPiece.getY() - _self.STEP_SIZE;
+        newY = calculateModCoordinate(firstPiece.getY() - _self.STEP_SIZE, 'y');
         break;
       case _self.DIRECTION_LEFT:
-        newX = firstPiece.getX() - _self.STEP_SIZE;
+        newX = calculateModCoordinate(firstPiece.getX() - _self.STEP_SIZE, 'x');
         newY = firstPiece.getY();
         break;
       case _self.DIRECTION_RIGHT:
-        newX = firstPiece.getX() + _self.STEP_SIZE;
+        newX = calculateModCoordinate(firstPiece.getX() + _self.STEP_SIZE, 'x');
         newY = firstPiece.getY();
         break;
       case _self.DIRECTION_DOWN:
         newX = firstPiece.getX();
-        newY = firstPiece.getY() + _self.STEP_SIZE;
+        newY = calculateModCoordinate(firstPiece.getY() + _self.STEP_SIZE, 'y');
         break;
     }
 
     // Check if the new position would exceed the limits
-    if (newX >= _limits.x0 && (newX + _self.STEP_SIZE <= _limits.x1) &&
-        newY >= _limits.y0 && (newY + _self.STEP_SIZE <= _limits.y1)) {
-      _snake[_snake.length-1].setPosition(newX, newY);
-      _snake.unshift(_snake.pop());
+    if (_grow) {
+      addPiece(_snake[_snake.length-1].clone());
+      _grow = false;
+    }
+
+    _self.tail().setPosition(newX, newY);
+    _snake.unshift(_snake.pop());
+
+    if (_onMoveListener) { _onMoveListener({ x : newX, y : newY }); }
+  };
+
+  // Calculates the coordinate with modulo if it exceeds limits
+  var calculateModCoordinate = function(coordinate, type) {
+    var limits;
+
+    // Find what limits should be used based on the type param
+    if      (type === 'x') { limits = { l0 : _limits.x0, l1 : _limits.x1 }; }
+    else if (type === 'y') { limits = { l0 : _limits.y0, l1 : _limits.y1 }; }
+
+    if (coordinate >= limits.l0 && coordinate <= (limits.l1 - _self.STEP_SIZE)) {
+      // If the coordinate is between the limits we return it with no changes
+      return coordinate;
+    } else {
+      // If the coordinate is over or below the limits we apply a custom MOD
+      // operations that handles negative valus appropriately and makes sure
+      // that the result is divisible by STEP_SIZE
+      return Math.floor(
+              (limits.l1 - _self.STEP_SIZE) / (limits.l0 - coordinate)
+            ) * _self.STEP_SIZE + limits.l0;
     }
   };
 
@@ -104,7 +142,13 @@ App.Models.Snake = function() {
       piece = new App.Models.Piece(_limits.x0, _limits.y0);
     }
 
+    addPiece(piece);
+  };
+
+  // Adds a piece to the snake
+  var addPiece = function(piece) {
     _snake.push(piece);
+    _$snake.append(piece.buildPiece());
   };
 
   // Returns true if it's possible to change to the given direction
