@@ -10,6 +10,21 @@
 }
 
 .meat {
+  @include transition(all 0.5s ease-in);
+  @include transform(scale(0.1));
   position: absolute;
+  overflow: hidden;
   background-color: white;
+
+  &.appear {
+    @include transform(scale(1) rotate(90deg));
+  }
+
+  &.destroy {
+    @include transform(scale(4) rotate(180deg));
+    background-color: transparent;
+    opacity: 0;
+
+    svg { display:none; }
+  }
 }

@@ -54,6 +54,9 @@ App.Models.Game = function() {
   var addMeat = function() {
     _meat = new App.Models.Meat(_limits);
     _$container.append(_meat.buildMeat());
+
+    // Appear is called with a delay otherwise animation is not triggered
+    setTimeout(_meat.appear(), 1);
   };
 
   // Calculate the limits of the board
@@ -70,13 +73,16 @@ App.Models.Game = function() {
     console.log(_limits);
   };
 
+  // Callback executed when the snake moves
   var onSnakeMoveCallback = function(headPosition) {
+    // If the snake has hit meat the callback is called
     if (_meat.getPosition().x === headPosition.x &&
         _meat.getPosition().y === headPosition.y) {
       onSnakeEatsMeat();
     }
   };
 
+  // Callback executed when the snake hits meat
   var onSnakeEatsMeat = function() {
     _snake.grow();
     _meat.destroy();

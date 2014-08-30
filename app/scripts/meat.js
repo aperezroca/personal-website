@@ -15,13 +15,7 @@ App.Models.Meat = function() {
     _limits = limits;
 
     setPosition();
-
-    _$meat = $('<div>').addClass('meat').css({
-      height: _self.MEAT_SIZE + 'px',
-      width: _self.MEAT_SIZE + 'px',
-      top: _position.y,
-      left: _position.x
-    });
+    createDOM();
   };
 
   // Public methods
@@ -34,8 +28,11 @@ App.Models.Meat = function() {
   // Position getter
   this.getPosition = function() { return _position; };
 
+  // Makes the meat appear in the board
+  this.appear = function() { _$meat.addClass('appear'); };
+
   // Destroy meat
-  this.destroy = function() { _$meat.remove(); };
+  this.destroy = function() { _$meat.addClass('destroy'); };
 
   // Private methods
 
@@ -51,6 +48,20 @@ App.Models.Meat = function() {
         maxStepSize = Math.floor(max / 10);
 
     return Math.floor(Math.random() * (maxStepSize - minStepSize)) * 10 + min;
+  };
+
+  // Creates DOM representation of meat
+  var createDOM = function() {
+    _$meat = $('<div>').addClass('meat').css({
+      height: _self.MEAT_SIZE + 'px',
+      width: _self.MEAT_SIZE + 'px',
+      top: _position.y,
+      left: _position.x
+    }).on('animationend transitionend', function() {
+      if (_$meat.hasClass('destroy')) {
+        _$meat.remove();
+      }
+    });
   };
 
   // Calls the initializer on creation
