@@ -17,6 +17,7 @@ App.Models.Game = function() {
     _snake = App.Models.Snake(_limits);
     _snake.startMoving();
     _snake.setOnMoveListener(onSnakeMoveCallback);
+    _snake.setOnCollisionListener(onSnakeCollisionCallback);
 
     _$container.append(_snake.buildSnake());
 
@@ -82,6 +83,9 @@ App.Models.Game = function() {
       onSnakeEatsMeat();
     }
   };
+
+  // Callback executed when the snake collides
+  var onSnakeCollisionCallback = function() { };
 
   // Callback executed when the snake hits meat
   var onSnakeEatsMeat = function() {

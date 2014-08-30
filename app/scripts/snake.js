@@ -13,7 +13,7 @@ App.Models.Snake = function() {
   // Private vars
   var _self = this, _direction = _self.DIRECTION_UP,
       _snake = [], _limits, _grow = false, _moveInterval,
-      _onMoveListener,
+      _onMoveListener, _onCollisionListener,
       _$snake;
 
   // Constructor
@@ -65,11 +65,19 @@ App.Models.Snake = function() {
     _onMoveListener = callback;
   };
 
+  // Attach listener to snake collision
+  this.setOnCollisionListener = function(callback) {
+    _onCollisionListener = callback;
+  };
+
   // Makes the snake grow one piece
   this.grow = function() { _grow = true; };
 
   // Returns the tail of the snake
   this.tail = function() { return _snake[_snake.length-1]; };
+
+  // Returns the tail of the snake
+  this.head = function() { return _snake[0]; };
 
   // Private methods
 
@@ -106,7 +114,7 @@ App.Models.Snake = function() {
     _self.tail().setPosition(newX, newY);
     _snake.unshift(_snake.pop());
 
-    if (_onMoveListener) { _onMoveListener({ x : newX, y : newY }); }
+    onMove({ x : newX, y : newY });
   };
 
   // Calculates the coordinate with modulo if it exceeds limits
@@ -156,6 +164,26 @@ App.Models.Snake = function() {
     // Magic, bitches!
     // https://www.nerdist.com/wp-content/uploads/2014/05/shia-labeouf-magic-gif.gif
     return (_direction + direction) % 2 !== 0;
+  };
+
+  // Runs when the snake moves
+  var onMove = function(position) {
+    if (checkCollision() && _onCollisionListener) { _onCollisionListener(); }
+    if (_onMoveListener)  { _onMoveListener(position); }
+  };
+
+  // Checks if the head of the snake has collide with the rest of it
+  var checkCollision = function() {
+    var headX = _self.head().getX(), headY = _self.head().getY(),
+        collision = false, i = 1;
+
+    while (!collision && i < _snake.length) {
+      collision = (headX === _snake[i].getX()) && (headY === _snake[i].getY());
+      i++;
+      if (collision) console.log(i);
+    }
+
+    return collision;
   };
 
   // Calls the initializer on creation
