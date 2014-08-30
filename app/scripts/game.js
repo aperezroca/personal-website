@@ -56,7 +56,7 @@ App.Models.Game = function() {
     _$container.append(_meat.buildMeat());
 
     // Appear is called with a delay otherwise animation is not triggered
-    setTimeout(_meat.appear(), 1);
+    setTimeout(_meat.appear, 1);
   };
 
   // Calculate the limits of the board
