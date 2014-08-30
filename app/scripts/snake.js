@@ -11,7 +11,7 @@ App.Models.Snake = function() {
   this.STEP_SIZE = this.PIECE_SIZE;
 
   // Private vars
-  var _self = this, _direction = _self.DIRECTION_UP,
+  var _self = this, _direction = _self.DIRECTION_UP, _nextDirection = null,
       _snake = [], _limits, _grow = false, _moveInterval,
       _onMoveListener, _onCollisionListener,
       _$snake;
@@ -31,7 +31,7 @@ App.Models.Snake = function() {
   // Set the direction of the movement
   this.setDirection = function(direction) {
     if (possibleChangeTo(direction)) {
-      _direction = direction;
+      _nextDirection = direction;
     }
   };
 
@@ -84,6 +84,11 @@ App.Models.Snake = function() {
   // Moves the snake based on the direction
   var move = function() {
     var newX, newY, firstPiece = _snake[0];
+
+    if (_nextDirection !== null) {
+      _direction = _nextDirection;
+      _nextDirection = null;
+    }
 
     // Calculates the new position of the snake based on the direction
     switch (_direction) {
