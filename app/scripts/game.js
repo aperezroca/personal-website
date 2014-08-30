@@ -19,6 +19,8 @@ App.Models.Game = function() {
     _snake.setOnMoveListener(onSnakeMoveCallback);
 
     _$container.append(_snake.buildSnake());
+
+    _$container.addClass('dark');
   };
 
   // Public methods

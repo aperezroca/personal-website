@@ -12,6 +12,16 @@ body {
   font-family: "Arvo", serif;
 }
 
+#line-1, #line-2, #line-3, #line-4 {
+  opacity: 0;
+  animation: titleanimation $initial-animation-duration ease-in-out forwards;
+}
+
+#line-1 { @include transform(translate(0px,  120px)); };
+#line-2 { @include transform(translate(0px,  46px)); };
+#line-3 { @include transform(translate(0px, -46px)); };
+#line-4 { @include transform(translate(0px, -92px)); };
+
 header {
   position: relative;
   display: flex;
@@ -19,12 +29,6 @@ header {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  // animation-name: resize;
-  // animation-duration: 30s;
-  // animation-iteration-count: infinite;
-  // animation-timing-function: linear;
-
   border: 1px solid white;
   color: white;
   font-weight: 400;
@@ -38,7 +42,20 @@ header {
   h1 { font-size: 34px; letter-spacing: 3px; }
   h2 { font-size: 26px; letter-spacing: 1px; }
 
+  svg {
+    @include transition(all 1s ease-in-out);
+    stroke: white;
+  }
+
+  &.darken .content-wrapper {
+    @include transform(scale(0.95));
+    color: shade($background-color-secondary, 15%);
+
+    svg { stroke: shade($background-color-secondary, 15%); }
+  }
+
   .content-wrapper {
+    @include transition(all 1s ease-in-out);
     display:block;
     text-align: center;
 
@@ -64,7 +81,7 @@ header {
 
       stroke-dasharray: 450;
       stroke-dashoffset: 450;
-      animation: dash 5s ease-in-out forwards;
+      animation: dash $initial-animation-duration ease-in-out forwards;
 
       &.bottom {
         transform: rotate(180deg);
@@ -72,10 +89,12 @@ header {
     }
 
     .separator {
-      @include size(100px 1px);
-      background-color: white;
       display: block;
       margin: 40px auto;
+
+      stroke-dasharray: 0, 100;
+      stroke-dashoffset: 50;
+      animation: dash2 $initial-animation-duration ease-in-out forwards;
     }
   }
 
@@ -94,16 +113,22 @@ header {
   }
 }
 
-@keyframes resize {
-  0%   { background-color: red; }
-  25%  { background-color: blue; }
-  50%  { background-color: green; }
-  75%  { background-color: yellow; }
-  100% { background-color: red; }
-}
-
 @keyframes dash {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash2 {
+  to {
+    stroke-dashoffset: 100;
+    stroke-dasharray: 100, 0;
+  }
+}
+
+@keyframes titleanimation {
+  to {
+    @include transform(translate(0px, 0px));
+    opacity: 1;
   }
 }
