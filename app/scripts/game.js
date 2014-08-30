@@ -70,7 +70,6 @@ App.Models.Game = function() {
       y0 : Math.floor((height % 10) / 2),
       y1 : height - Math.ceil((height % 2) / 2)
     };
-    console.log(_limits);
   };
 
   // Callback executed when the snake moves
