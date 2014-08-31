@@ -9,7 +9,7 @@ html, body { height: 100%; }
 
 body {
   background-color: $background-color-secondary;
-  font-family: "Arvo", serif;
+  font-family: "Josefin Slab", serif;
 }
 
 #line-1, #line-2, #line-3, #line-4 {
@@ -37,6 +37,7 @@ header {
     display: inline-block;
     margin: auto;
     text-transform: uppercase;
+    font-weight: 400;
   }
 
   h1 { font-size: 34px; letter-spacing: 3px; }
@@ -64,6 +65,7 @@ header {
     span {
       display: block;
       text-decoration: none;
+      font-weight: 100;
 
       &.pretitle {
         text-transform: uppercase;
@@ -81,7 +83,7 @@ header {
 
       stroke-dasharray: 450;
       stroke-dashoffset: 450;
-      animation: dash $initial-animation-duration ease-in-out forwards;
+      animation: dash-outer-separator $initial-animation-duration ease-in-out forwards;
 
       &.bottom {
         transform: rotate(180deg);
@@ -94,7 +96,7 @@ header {
 
       stroke-dasharray: 0, 100;
       stroke-dashoffset: 50;
-      animation: dash2 $initial-animation-duration ease-in-out forwards;
+      animation: dash-separator $initial-animation-duration ease-in-out forwards;
     }
   }
 
@@ -110,16 +112,17 @@ header {
     background-color: $background-color-secondary;
     color: white;
     text-decoration: none;
+    font-weight: 100;
   }
 }
 
-@keyframes dash {
+@keyframes dash-outer-separator {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes dash2 {
+@keyframes dash-separator {
   to {
     stroke-dashoffset: 100;
     stroke-dasharray: 100, 0;
