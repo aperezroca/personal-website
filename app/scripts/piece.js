@@ -44,6 +44,11 @@ App.Models.Piece = function() {
     return new App.Models.Piece(_position.x, _position.y);
   };
 
+  // Destroys the piece
+  this.destroy = function() {
+    _$piece.addClass('destroy');
+  };
+
   // Private methods
 
   // Callback to execute when the position of the piece changes

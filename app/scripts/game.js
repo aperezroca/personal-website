@@ -5,28 +5,36 @@ App.Models.Game = function() {
   // Constants
 
   // Private vars
-  var _snake, _limits, _meat, _$container;
+  var _snake, _limits, _meat, _started,
+      _$container;
 
   // Constructor
   this.initialize = function(container) {
     _$container = container;
     calculateLimits();
     bindKeys();
-    addMeat();
 
     _snake = App.Models.Snake(_limits);
-    _snake.startMoving();
     _snake.setOnMoveListener(onSnakeMoveCallback);
     _snake.setOnCollisionListener(onSnakeCollisionCallback);
 
-    _$container.append(_snake.buildSnake());
-
-    _$container.addClass('dark');
+    _started = false;
   };
 
   // Public methods
 
   // Private methods
+
+  // Start game
+  var start = function() {
+    _$container.addClass('darken').on('animationend transitionend', function() {
+      if (_started) { return; }
+      _$container.append(_snake.buildSnake());
+      _snake.startMoving();
+      addMeat();
+      _started = true;
+    });
+  };
 
   // Bind keys to move the snake
   var bindKeys = function() {
@@ -46,6 +54,12 @@ App.Models.Game = function() {
           break;
         default:
           return; // exit this handler for other keys
+      }
+
+      if (e.which == 37 || e.which == 38 ||
+          e.which == 39 || e.which == 40 &&
+          !_started) {
+        start();
       }
 
       // Prevents the default action (scroll / move caret)
@@ -85,13 +99,21 @@ App.Models.Game = function() {
   };
 
   // Callback executed when the snake collides
-  var onSnakeCollisionCallback = function() { };
+  var onSnakeCollisionCallback = function() {
+    _snake.destroy(onGameFinishes);
+    _meat.destroy();
+  };
 
   // Callback executed when the snake hits meat
   var onSnakeEatsMeat = function() {
     _snake.grow();
     _meat.destroy();
     addMeat();
+  };
+
+  // Callback executed when the game ends (snake hits itself)
+  var onGameFinishes = function() {
+    _$container.removeClass('darken');
   };
 
   // Calls the initializer on creation

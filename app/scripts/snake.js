@@ -11,7 +11,7 @@ App.Models.Snake = function() {
   this.STEP_SIZE = this.PIECE_SIZE;
 
   // Private vars
-  var _self = this, _direction = _self.DIRECTION_UP, _nextDirection = null,
+  var _self = this, _direction, _nextDirection = null,
       _snake = [], _limits, _grow = false, _moveInterval,
       _onMoveListener, _onCollisionListener,
       _$snake;
@@ -20,10 +20,6 @@ App.Models.Snake = function() {
   this.initialize = function(limits) {
     _limits = limits;
     _$snake = $('<ul>').addClass('snake');
-
-    for (var i = 0; i < 10; i++) {
-      appendPiece();
-    }
   };
 
   // Public methods
@@ -52,6 +48,7 @@ App.Models.Snake = function() {
 
   // Returns the DOM representation of the snake
   this.buildSnake = function() {
+    if (_snake.length === 0) { addInitialPiece(); }
     return _$snake;
   };
 
@@ -68,6 +65,16 @@ App.Models.Snake = function() {
   // Attach listener to snake collision
   this.setOnCollisionListener = function(callback) {
     _onCollisionListener = callback;
+  };
+
+  // Destroys the snake
+  this.destroy = function(callback) {
+    _self.stopMoving();
+    $.each(_snake, function(index, element) {
+      setTimeout(element.destroy, 20*index);
+    });
+
+    setTimeout(callback, 20*_snake.length);
   };
 
   // Makes the snake grow one piece
@@ -90,7 +97,7 @@ App.Models.Snake = function() {
       _nextDirection = null;
     }
 
-    // Calculates the new position of the snake based on the direction
+    // Calculates the new position of the snake based on the
     switch (_direction) {
       case _self.DIRECTION_UP:
         newX = firstPiece.getX();
@@ -110,8 +117,9 @@ App.Models.Snake = function() {
         break;
     }
 
-    // Check if the new position would exceed the limits
-    if (_grow) {
+    // Check if it's the time to grow because the snake has eaten or because
+    // it hasn't got to the initial length yet
+    if (_grow || _snake.length < 10) {
       addPiece(_snake[_snake.length-1].clone());
       _grow = false;
     }
@@ -164,6 +172,14 @@ App.Models.Snake = function() {
     _$snake.append(piece.buildPiece());
   };
 
+  // Adds the first piece of the snake depending on the initial direction
+  var addInitialPiece = function() {
+    var x = _limits.x0 + Math.floor(((_limits.x1 - _limits.x0) / 2) / _self.STEP_SIZE) * _self.STEP_SIZE,
+        y = _limits.y0 + Math.floor(((_limits.y1 - _limits.y0) / 2) / _self.STEP_SIZE) * _self.STEP_SIZE;
+
+    addPiece(new App.Models.Piece(x, y));
+  };
+
   // Returns true if it's possible to change to the given direction
   var possibleChangeTo = function(direction) {
     // Magic, bitches!
@@ -185,7 +201,6 @@ App.Models.Snake = function() {
     while (!collision && i < _snake.length) {
       collision = (headX === _snake[i].getX()) && (headY === _snake[i].getY());
       i++;
-      if (collision) console.log(i);
     }
 
     return collision;

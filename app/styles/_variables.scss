@@ -1,5 +1,5 @@
-$background-color-primary: #69D2E7;
-$background-color-secondary: #FD795E;
+$background-color: #FD795E;
+$background-color-darker: shade($background-color, 15%);
 $header-height: 350px;
 
 $initial-animation-duration: 2s;

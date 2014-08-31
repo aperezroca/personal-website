@@ -4,8 +4,13 @@
   position: absolute;
 
   .piece {
+    @include transition(transform 0.5s ease-in);
     position: absolute;
     background-color: white;
+
+    &.destroy {
+      @include transform(scale(0));
+    }
   }
 }
 

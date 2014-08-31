@@ -8,13 +8,13 @@ html, body { height: 100%; }
 .container { height: 100%; padding: 10px; }
 
 body {
-  background-color: $background-color-secondary;
+  background-color: $background-color;
   font-family: "Josefin Slab", serif;
 }
 
 #line-1, #line-2, #line-3, #line-4 {
   opacity: 0;
-  animation: titleanimation $initial-animation-duration ease-in-out forwards;
+  animation: title $initial-animation-duration ease-in-out forwards;
 }
 
 #line-1 { @include transform(translate(0px,  120px)); };
@@ -50,9 +50,9 @@ header {
 
   &.darken .content-wrapper {
     @include transform(scale(0.95));
-    color: shade($background-color-secondary, 15%);
+    color: $background-color-darker;
 
-    svg { stroke: shade($background-color-secondary, 15%); }
+    svg { stroke: $background-color-darker; }
   }
 
   .content-wrapper {
@@ -109,10 +109,19 @@ header {
     text-align: center;
     width: 230px;
     margin-left: -115px;
-    background-color: $background-color-secondary;
+    background-color: $background-color;
     color: white;
     text-decoration: none;
     font-weight: 100;
+  }
+
+  .keys {
+    @include animation(start-text 2s linear infinite);
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+
+    svg { stroke: white; fill: white; }
   }
 }
 
@@ -129,9 +138,15 @@ header {
   }
 }
 
-@keyframes titleanimation {
+@keyframes title {
   to {
     @include transform(translate(0px, 0px));
     opacity: 1;
   }
+}
+
+@keyframes start-text {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.1; }
+  100% { opacity: 1; }
 }
