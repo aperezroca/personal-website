@@ -77,13 +77,11 @@ header {
     }
 
     .outer-separator {
+      @include animation(dash-outer-separator $initial-animation-duration ease-in-out forwards);
       display: block;
-      padding: 50px 0;
-      margin: auto;
-
+      margin: 50px auto;
       stroke-dasharray: 450;
       stroke-dashoffset: 450;
-      animation: dash-outer-separator $initial-animation-duration ease-in-out forwards;
 
       &.bottom {
         transform: rotate(180deg);
@@ -91,28 +89,60 @@ header {
     }
 
     .separator {
+      @include animation(dash-separator $initial-animation-duration ease-in-out forwards);
       display: block;
       margin: 40px auto;
-
       stroke-dasharray: 0, 100;
       stroke-dashoffset: 50;
-      animation: dash-separator $initial-animation-duration ease-in-out forwards;
     }
   }
 
-  .contact {
+  .social {
     display: block;
     position: absolute;
-    bottom: -6px;
+    bottom: 20px;
     left: 50%;
-    font-size: 13px;
-    text-align: center;
-    width: 230px;
-    margin-left: -115px;
-    background-color: $background-color;
+    width: 220px;
+    margin-left: -110px;
     color: white;
     text-decoration: none;
     font-weight: 100;
+
+    li {
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      margin: 0 20px;
+    }
+
+    a {
+      @include retina-image("../images/social", 90px 60px);
+      display: block;
+      height: 30px;
+      width: 30px;
+      background-repeat: no-repeat;
+      opacity: 0;
+    }
+
+    .twitter {
+      @include animation(social-left .5s ease-out forwards);
+      @include animation-delay($initial-animation-duration);
+      background-position: 0px -30px;
+    }
+    .github  {
+      @include animation(social-center .5s ease-out forwards);
+      @include animation-delay($initial-animation-duration);
+      background-position: -30px -30px;
+    }
+    .contact {
+      @include animation(social-right .5s ease-out forwards);
+      @include animation-delay($initial-animation-duration);
+      background-position: -60px -30px;
+    }
+
+    .twitter:hover { background-position:  0px  0px; }
+    .github:hover  { background-position: -30px 0px; }
+    .contact:hover { background-position: -60px 0px; }
   }
 
   .keys {
@@ -122,11 +152,11 @@ header {
     bottom: 6px;
 
     svg { stroke: white; fill: white; }
-
-    &.hide {
-      @include animation(hide 1s linear forwards);
-    }
   }
+}
+
+.hide {
+  @include animation(hide 1s linear forwards);
 }
 
 @keyframes dash-outer-separator {
@@ -157,4 +187,40 @@ header {
 
 @keyframes hide {
   to { opacity: 0; }
+}
+
+@keyframes social-left {
+  from {
+    @include transform(translate(40px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
+}
+
+@keyframes social-center {
+  from {
+    @include transform(translate(0px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
+}
+
+@keyframes social-right {
+  from {
+    @include transform(translate(-40px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
 }

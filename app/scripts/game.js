@@ -27,7 +27,7 @@ App.Models.Game = function() {
 
   // Start game
   var start = function() {
-    $('.keys', _$container).addClass('hide');
+    $('.to-hide', _$container).fadeOut();
     _$container.addClass('darken').on('animationend transitionend', function() {
       if (_$container.hasClass('darken') && !_started) {
         _$container.append(_snake.buildSnake());
@@ -112,7 +112,7 @@ App.Models.Game = function() {
   // Callback executed when the game ends (snake hits itself)
   var onGameFinishes = function() {
     _$container.removeClass('darken');
-    $('.keys', _$container).removeClass('hide');
+    $('.to-hide', _$container).fadeIn();
     $('.snake', _$container).remove();
     _started = false;
   };
