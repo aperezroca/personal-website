@@ -74,7 +74,10 @@ App.Models.Snake = function() {
       setTimeout(element.destroy, 20*index);
     });
 
-    setTimeout(callback, 20*_snake.length);
+    _self.tail().buildPiece().on('animationend transitionend', function() {
+      callback();
+      _snake = [];
+    });
   };
 
   // Makes the snake grow one piece

@@ -27,12 +27,14 @@ App.Models.Game = function() {
 
   // Start game
   var start = function() {
+    $('.keys', _$container).addClass('hide');
     _$container.addClass('darken').on('animationend transitionend', function() {
-      if (_started) { return; }
-      _$container.append(_snake.buildSnake());
-      _snake.startMoving();
-      addMeat();
-      _started = true;
+      if (_$container.hasClass('darken') && !_started) {
+        _$container.append(_snake.buildSnake());
+        _snake.startMoving();
+        addMeat();
+        _started = true;
+      }
     });
   };
 
@@ -56,11 +58,7 @@ App.Models.Game = function() {
           return; // exit this handler for other keys
       }
 
-      if (e.which == 37 || e.which == 38 ||
-          e.which == 39 || e.which == 40 &&
-          !_started) {
-        start();
-      }
+      if (!_started) { start(); }
 
       // Prevents the default action (scroll / move caret)
       e.preventDefault();
@@ -114,6 +112,9 @@ App.Models.Game = function() {
   // Callback executed when the game ends (snake hits itself)
   var onGameFinishes = function() {
     _$container.removeClass('darken');
+    $('.keys', _$container).removeClass('hide');
+    $('.snake', _$container).remove();
+    _started = false;
   };
 
   // Calls the initializer on creation

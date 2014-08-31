@@ -122,6 +122,10 @@ header {
     bottom: 6px;
 
     svg { stroke: white; fill: white; }
+
+    &.hide {
+      @include animation(hide 1s linear forwards);
+    }
   }
 }
 
@@ -146,7 +150,11 @@ header {
 }
 
 @keyframes start-text {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.1; }
-  100% { opacity: 1; }
+  0%   { opacity: 0.1; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.1; }
+}
+
+@keyframes hide {
+  to { opacity: 0; }
 }
