@@ -151,21 +151,6 @@ App.Models.Snake = function() {
     }
   };
 
-  // Creates and append a new piece to the snake
-  var appendPiece = function() {
-    var piece, lastElement = _snake[_snake.length-1];
-
-    if (lastElement) {
-      piece = new App.Models.Piece(
-        lastElement.getX(),
-        lastElement.getY() + _self.STEP_SIZE);
-    } else {
-      piece = new App.Models.Piece(_limits.x0, _limits.y0);
-    }
-
-    addPiece(piece);
-  };
-
   // Adds a piece to the snake
   var addPiece = function(piece) {
     _snake.push(piece);
