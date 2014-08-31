@@ -144,8 +144,11 @@ App.Models.Snake = function() {
     if (coordinate >= limits.l0 && coordinate <= (limits.l1 - _self.STEP_SIZE)) {
       // If the coordinate is between the limits we return it with no changes
       return coordinate;
+    } else if (coordinate > limits.l1 - _self.STEP_SIZE) {
+      // If the coordinate is over limits we apply MOD operation
+      return limits.l0 + coordinate % (limits.l1 - limits.l0);
     } else {
-      // If the coordinate is over or below the limits we apply a custom MOD
+      // If the coordinate is below the limits we apply a custom MOD
       // operations that handles negative valus appropriately and makes sure
       // that the result is divisible by STEP_SIZE
       return Math.floor(
