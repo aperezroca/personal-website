@@ -38,7 +38,7 @@ App.Models.Snake = function() {
 
   // Starts moving the snake
   this.startMoving = function() {
-    _moveInterval = setInterval(move, 40);
+    _moveInterval = setInterval(move, 30);
   };
 
   // Stops moving the snake
