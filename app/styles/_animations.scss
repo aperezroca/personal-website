@@ -1,0 +1,65 @@
+@keyframes dash-outer-separator {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash-separator {
+  to {
+    stroke-dashoffset: 100;
+    stroke-dasharray: 100, 0;
+  }
+}
+
+@keyframes title {
+  to {
+    @include transform(translate(0px, 0px));
+    opacity: 1;
+  }
+}
+
+@keyframes start-text {
+  0%   { opacity: 0.1; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.1; }
+}
+
+@keyframes hide {
+  to { opacity: 0; }
+}
+
+@keyframes social-left {
+  from {
+    @include transform(translate(40px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
+}
+
+@keyframes social-center {
+  from {
+    @include transform(translate(0px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
+}
+
+@keyframes social-right {
+  from {
+    @include transform(translate(-40px, -20px) scale(0.8));
+    opacity: 0;
+  }
+
+  to {
+    @include transform(translate(0px, 0px) scale(1));
+    opacity: 1;
+  }
+}
