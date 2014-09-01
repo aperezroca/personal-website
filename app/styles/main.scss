@@ -60,6 +60,8 @@ header {
     @include transition(all 1s ease-in-out);
     display:block;
     text-align: center;
+    max-width: 100%;
+    padding: 30px;
 
     p { padding: 40px; }
 
@@ -81,6 +83,7 @@ header {
       @include animation(dash-outer-separator $initial-animation-duration ease-in-out forwards);
       display: block;
       margin: 50px auto;
+      max-width: 100%;
       stroke-dasharray: 450;
       stroke-dashoffset: 450;
 
@@ -103,14 +106,15 @@ header {
     position: absolute;
     bottom: 20px;
     left: 50%;
-    width: 220px;
-    margin-left: -110px;
+    width: 210px;
+    margin-left: -105px;
     color: white;
     text-decoration: none;
     font-weight: 100;
 
     li {
-      display: inline-block;
+      display: block;
+      float: left;
       height: 30px;
       width: 30px;
       margin: 0 20px;
@@ -158,4 +162,22 @@ header {
 
 .hide {
   @include animation(hide 1s linear forwards);
+}
+
+@media all and (max-width: 550px) {
+  header {
+    h1 { font-size: 24px; line-height: 28px; }
+    h2 { font-size: 20px; line-height: 24px; }
+
+    .content-wrapper {
+      span.pretitle.h1 { font-size: 18px; padding-bottom: 30px; }
+      span.pretitle.h2 { font-size: 16px; padding-bottom: 20px; }
+
+      .separator { margin: 20px auto; }
+
+      .outer-separator { margin: 20px auto; }
+    }
+
+    .keys { display: none; }
+  }
 }
