@@ -80,7 +80,7 @@ header {
     }
 
     .outer-separator {
-      @include animation(dash-outer-separator $initial-animation-duration ease-in-out forwards);
+      @include animation(dash $initial-animation-duration ease-in-out forwards);
       display: block;
       margin: 50px auto;
       max-width: 100%;
@@ -93,11 +93,16 @@ header {
     }
 
     .separator {
-      @include animation(dash-separator $initial-animation-duration ease-in-out forwards);
       display: block;
       margin: 40px auto;
-      stroke-dasharray: 0, 100;
-      stroke-dashoffset: 50;
+      stroke-dasharray: 50;
+
+      line {
+        @include animation(dash $initial-animation-duration ease-in-out forwards);
+      }
+
+      .line-1 { stroke-dashoffset: -50; }
+      .line-2 { stroke-dashoffset: 50; }
     }
   }
 
