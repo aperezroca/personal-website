@@ -29,12 +29,7 @@ App.Models.Game = function() {
   var start = function() {
     $('.to-hide', _$container).fadeOut();
     _$container.addClass('darken').on('animationend transitionend', function() {
-      if (_$container.hasClass('darken') && !_started) {
-        _$container.append(_snake.buildSnake());
-        _snake.startMoving();
-        addMeat();
-        _started = true;
-      }
+      if (_$container.hasClass('darken') && !_started) { onGameStarts(); }
     });
   };
 
@@ -109,12 +104,28 @@ App.Models.Game = function() {
     addMeat();
   };
 
+  // Callback executed when the game starts
+  var onGameStarts = function() {
+    _$container.append(_snake.buildSnake());
+    _snake.startMoving();
+    addMeat();
+    _started = true;
+
+    // Track game finishes
+    ga('send', 'event', 'Snake', 'Start');
+  }
+
   // Callback executed when the game ends (snake hits itself)
   var onGameFinishes = function() {
+    var snakeLength = _snake.length() - _snake.INITIAL_LENGTH;
+
     _$container.removeClass('darken');
     $('.to-hide', _$container).fadeIn();
     $('.snake', _$container).remove();
     _started = false;
+
+    // Track game finishes
+    ga('send', 'event', 'Snake', 'Finish', null, snakeLength);
   };
 
   // Calls the initializer on creation

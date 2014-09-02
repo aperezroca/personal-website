@@ -9,6 +9,7 @@ App.Models.Snake = function() {
   this.DIRECTION_LEFT = 3;
   this.PIECE_SIZE = 10;
   this.STEP_SIZE = this.PIECE_SIZE;
+  this.INITIAL_LENGTH = 10;
 
   // Private vars
   var _self = this, _direction, _nextDirection = null,
@@ -89,6 +90,9 @@ App.Models.Snake = function() {
   // Returns the tail of the snake
   this.head = function() { return _snake[0]; };
 
+  // Returns the length of the snake
+  this.length = function() { return _snake.length; };
+
   // Private methods
 
   // Moves the snake based on the direction
@@ -122,7 +126,7 @@ App.Models.Snake = function() {
 
     // Check if it's the time to grow because the snake has eaten or because
     // it hasn't got to the initial length yet
-    if (_grow || _snake.length < 10) {
+    if (_grow || _snake.length < _self.INITIAL_LENGTH) {
       addPiece(_snake[_snake.length-1].clone());
       _grow = false;
     }
