@@ -125,7 +125,7 @@ App.Models.Game = function() {
     _started = false;
 
     // Track game finishes
-    ga('send', 'event', 'Snake', 'Finish', null, snakeLength);
+    ga('send', 'event', 'Snake', 'Finish', snakeLength, snakeLength);
   };
 
   // Calls the initializer on creation
