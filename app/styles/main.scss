@@ -61,7 +61,7 @@ header {
     display:block;
     text-align: center;
     max-width: 100%;
-    padding: 30px;
+    padding: 10px 30px;;
 
     p { padding: 40px; }
 
@@ -175,14 +175,16 @@ header {
     h2 { font-size: 20px; line-height: 24px; }
 
     .content-wrapper {
-      span.pretitle.h1 { font-size: 18px; padding-bottom: 30px; }
+      span.pretitle.h1 { font-size: 18px; padding-bottom: 28px; }
       span.pretitle.h2 { font-size: 16px; padding-bottom: 20px; }
 
-      .separator { margin: 20px auto; }
+      .separator { margin: 16px auto; }
 
-      .outer-separator { margin: 20px auto; }
+      .outer-separator { margin: 16px auto; }
     }
 
     .keys { display: none; }
+
+    .social { bottom: 15px; }
   }
 }
